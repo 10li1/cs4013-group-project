@@ -1,5 +1,5 @@
 # cs4013-group-project
-cs4013 group project for student result portal
+cs4013 group project for student result 
 
 ### group member:
 1. Peile Li      22305319
