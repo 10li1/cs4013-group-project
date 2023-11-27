@@ -168,7 +168,7 @@ public class Admin {
                             System.out.println("please enter the Course information: ");
                             
                             try {
-                                Course.addNewCourse(in,"course.csv"); // 修改指定的专业
+                                Course.addNewCourse(in,"course.csv"); // add new course to csv file
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -178,7 +178,7 @@ public class Admin {
                             System.out.println("please enter the Course you want to modify: ");
                             
                             try {
-                                Course.modifyCourse(in, "course.csv"); // 修改指定的专业
+                                Course.modifyCourse(in, "course.csv"); // modify course from csv
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -188,7 +188,7 @@ public class Admin {
                             System.out.println("Please enter the course information: ");
                            
                             try {
-                                Course.modifyCourseModules(in, "course.csv"); // 修改或添加模块
+                                Course.modifyCourseModules(in, "course.csv"); // modify module from csv
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -198,7 +198,7 @@ public class Admin {
                             System.out.println("Please enter the course to deleted: ");
                            
                             try {
-                                Course.deleteCourse(in, "course.csv"); // 删除指定的模块
+                                Course.deleteCourse(in, "course.csv"); // delect course from csv
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -214,10 +214,10 @@ public class Admin {
                         response = in.next().trim().toUpperCase();
                         System.out.println();   
                         if (response.equals("Y")) {
-                            break; // 继续循环
+                            break; 
                         } 
                         else if (response.equals("N")) {
-                            break; // 用户选择 'N'，退出循环
+                            break; // if chose n to exit
                         } 
                         else {
                             System.out.println("Invalid input, please try again");
@@ -226,13 +226,12 @@ public class Admin {
                     }
 
                     if (response.equals("N")) {
-                     // 跳出外部循环
                         break;
                     }
                 } while (true);
             } 
             else if (choice.equals("4")) {
-                continues = false; // 用户选择退出
+                continues = false; // user chose exit
             } 
             else {
                 System.out.println("Invalid input, please try again");
@@ -258,7 +257,6 @@ public class Admin {
             System.out.println();
         }
     }
-    // 其他管理员特有的方法
 
     public void setAdminId(String adminId) {
         this.adminId = adminId;
