@@ -1,5 +1,7 @@
 # cs4013-group-project
-group member:
- Peile Li 22305319,
-Tianxing Fan 20100035,
-Cheng Yang 21031991
+cs4013 group project for student result portal
+
+### group member:
+1. Peile Li      22305319
+2. Tianxing Fan  20100035
+3. Cheng Yang    21031991
