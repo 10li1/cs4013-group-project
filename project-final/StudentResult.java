@@ -29,7 +29,8 @@ public class StudentResult{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            } else if (command.equals("2")) {
+            } 
+            else if (command.equals("2")) {
                 try {
                     Teacher.teacherLogin(in,"teacherInfo.csv");
                     display = false;
@@ -37,16 +38,19 @@ public class StudentResult{
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            } else if (command.equals("3")) {
+            } 
+            else if (command.equals("3")) {
                 try {
                     Admin.adminLogin(in);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            } else if (command.equals("4")) {
+            } 
+            else if (command.equals("4")) {
                 more = false;
                 return;
-            } else {
+            } 
+            else {
                 display = false; 
 
             }

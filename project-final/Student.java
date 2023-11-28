@@ -107,7 +107,7 @@ public class Student {
                         String choice = in.next();
                         System.out.println();
                         if (choice.equals("1")) {
-                            viewStudentInfo(studentId, "studentInfo_new.csv");
+                            viewStudentInfo(studentId, "studentInfo_course.csv");
                         } else if (choice.equals("2")) {
                             viewStudentGrades(studentId, "studentQCA.csv");
                         } else if (choice.equals("3")) {

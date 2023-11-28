@@ -19,7 +19,7 @@ public class Admin {
     /**
      * Display the operations that the administrator can perform when choosing to log in as an admin
      * 
-     * @param in
+     * @param in chose operate
      * @throws IOException
      */
     public static void adminLogin(Scanner in) throws IOException {
@@ -33,9 +33,9 @@ public class Admin {
             String choice = in.next();
             System.out.println();
             in.nextLine(); 
-            
             if (choice.equals("1") || choice.equals("2") || choice.equals("3")) {
                 do {
+                    //modify student 
                     if (choice.equals("1")) {
                         System.out.println("Please select:");
                         System.out.println("1. Add Student");
@@ -46,10 +46,11 @@ public class Admin {
                         String choice1 = in.next();
                         System.out.println();
                         if(choice1.equals("1")){
+                            //add new student and save in studentinfo.csv
                             Student.registerStudent("studentInfo.csv");
                             System.out.println("Student information is saved");
                         }
-
+                        //to view student info from studentinfo.csv
                         else if(choice1.equals("2")){
                             System.out.println("input student Id");                           
                             String studentId = in.next();
@@ -60,7 +61,7 @@ public class Admin {
                                 e.printStackTrace();
                             }
                         }
-
+                        //change student info 
                         else if(choice1.equals("3")){
                             System.out.println("input student Id");                           
                             String studentId = in.next();
@@ -71,18 +72,18 @@ public class Admin {
                                 e.printStackTrace();
                             }
                         }
-
+                        //to set student score for each module if have in studentInfo_course.csv and save in result.csv
                         else if(choice1.equals("4")){
                             System.out.println("input student number ");                           
                             String studentId = in.next();
                             System.out.println();
                             try {
-                                inputGrades(studentId,in, "studentInfo_new.csv", "result.csv");
+                                inputGrades(studentId,in, "studentInfo_course.csv", "result.csv");
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         }
-
+                        //remove student from csv file
                         else if(choice1.equals("5")){
                             System.out.println("Please enter the ID of the student to be deleted");                           
                             String studentId = in.next();
@@ -97,7 +98,7 @@ public class Admin {
                             System.out.println("Ineffective choices");
                         }
                     }
-
+                    //teacher operat-The operation method is the same as that of the students
                     else if (choice.equals("2")) {
                         System.out.println("Please select:");
                         System.out.println("1. Add Teacher(Staff)");
@@ -146,7 +147,7 @@ public class Admin {
                             System.out.println();
                         }
                     }
-
+                    //course operate
                     else if (choice.equals("3")) {
                         System.out.println("Please select:");
                         System.out.println("1. View existing Courses");
@@ -156,49 +157,49 @@ public class Admin {
                         System.out.println("5. Delete course");
                         String choice3 = in.next();
                         System.out.println();
+                        //view the course info
                         if(choice3.equals("1")){
                             try {
-                                Course.viewCourse("course.csv"); // 显示所有专业及其模块
+                                Course.viewCourse("course.csv"); 
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         }
-
+                        //add new course
                         else if(choice3.equals("2")){
                             System.out.println("please enter the Course information: ");
-                            
                             try {
                                 Course.addNewCourse(in,"course.csv"); // add new course to csv file
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         }
-
+                        // modify course from csv
                         else if(choice3.equals("3")){
                             System.out.println("please enter the Course you want to modify: ");
                             
                             try {
-                                Course.modifyCourse(in, "course.csv"); // modify course from csv
+                                Course.modifyCourse(in, "course.csv"); 
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         }
-
+                        // modify module from csv
                         else if(choice3.equals("4")){
                             System.out.println("Please enter the course information: ");
                            
                             try {
-                                Course.modifyCourseModules(in, "course.csv"); // modify module from csv
+                                Course.modifyCourseModules(in, "course.csv"); 
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
                         }
-
+                        // delect course from csv
                         else if(choice3.equals("5")){
                             System.out.println("Please enter the course to deleted: ");
                            
                             try {
-                                Course.deleteCourse(in, "course.csv"); // delect course from csv
+                                Course.deleteCourse(in, "course.csv"); 
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -207,7 +208,7 @@ public class Admin {
                             System.out.println("Invalid input, please try again");
                         }
                     }
-                    
+                    //ask for continue
                     String response;
                     System.out.println("Do you want to continue?(Y/N)");
                     while (true) {
@@ -224,29 +225,37 @@ public class Admin {
                             System.out.println();
                         }
                     }
-
                     if (response.equals("N")) {
                         break;
                     }
                 } while (true);
             } 
+            // user chose to exit
             else if (choice.equals("4")) {
-                continues = false; // user chose exit
+                continues = false; 
             } 
-            else {
+            else {//Invalid operate
                 System.out.println("Invalid input, please try again");
             }
         }
     }
 
+    /**
+     * set student grade for each module
+     * 
+     * @param studentId     select by student id 
+     * @param in            input student id
+     * @param studentCourseFilePath     search student info from student_course.csv
+     * @param resultFilePath            put result in result.csv
+     * @throws IOException
+     */
     public static void inputGrades(String studentId, Scanner in, String studentCourseFilePath, String resultFilePath) throws IOException {
         List<List<String>> studentsData = CSVReader.readData(studentCourseFilePath);
-        boolean found = false;
-    
+        boolean found = false;   
         for (List<String> studentData : studentsData) {
-            if (studentData.get(0).equals(studentId)) {
+            if (studentData.get(0).equals(studentId)) {//search by id
                 Result gradeManager = new Result();
-                gradeManager.inputGradesAndSave(studentData, in, resultFilePath);
+                gradeManager.inputGradesAndSave(studentData, in, resultFilePath);//get and save new data
                 found = true;
                 break;
             }
@@ -257,7 +266,7 @@ public class Admin {
             System.out.println();
         }
     }
-
+    //
     public void setAdminId(String adminId) {
         this.adminId = adminId;
     }

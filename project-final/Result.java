@@ -13,7 +13,13 @@ public class Result {
     private static final String[] GRADES = {"NG", "F", "D2", "D1", "C3", "C2", "C1", "B3", "B2", "B1", "A2", "A1"};
     private static final int[] SCORE_THRESHOLDS = {0, 1, 30, 35, 40, 48, 52, 56, 60, 64, 72, 80};
     private static final double[] QPV_POINTS = {0.00, 0.00, 1.20, 1.60, 2.00, 2.40, 2.60, 2.80, 3.00, 3.20, 3.60, 4.00};
-
+    
+    /**
+     * Convert scores to grades
+     *  
+     * @param score 
+     * @return  if no score return ng
+     */
     public static String scoreToGrade(double score) {
         for (int i = SCORE_THRESHOLDS.length - 1; i >= 0; i--) {
             if (score >= SCORE_THRESHOLDS[i]) {
@@ -23,15 +29,12 @@ public class Result {
         return "NG"; 
     }
 
-    public static double calculateQCA(List<String> grades) {
-        double totalPoints = 0;
-        for (String grade : grades) {
-            int index = indexOfGrade(grade);
-            totalPoints += QPV_POINTS[index];
-        }
-        return grades.isEmpty() ? 0 : totalPoints / grades.size();
-    }
-
+    /**
+     * grade to QPV
+     * 
+     * @param grade get grade from list
+     * @return 0
+     */
     private static int indexOfGrade(String grade) {
         for (int i = 0; i < GRADES.length; i++) {
             if (GRADES[i].equals(grade)) {
@@ -41,6 +44,30 @@ public class Result {
         return 0; 
     }
 
+
+    /**
+     * calculate qca by grade
+     *  
+     * @param grades   
+     * @return  qca
+     */
+    public static double calculateQCA(List<String> grades) {
+        double totalPoints = 0;
+        for (String grade : grades) {
+            int index = indexOfGrade(grade);
+            totalPoints += QPV_POINTS[index];
+        }
+        return grades.isEmpty() ? 0 : totalPoints / grades.size();
+    }
+
+    /**
+     * set student result 
+     * 
+     * @param studentCourse
+     * @param scanner
+     * @param resultFilePath
+     * @throws IOException
+     */
     public void inputGradesAndSave(List<String> studentCourse, Scanner scanner, String resultFilePath) throws IOException {
     String studentId = studentCourse.get(0);
     String course = studentCourse.get(3);
@@ -93,7 +120,6 @@ public class Result {
     public void calculateAndSaveStudentGPA(String resultFilePath, String qcaFilePath) {
         try (BufferedReader reader = new BufferedReader(new FileReader(resultFilePath));
         BufferedWriter writer = new BufferedWriter(new FileWriter(qcaFilePath))) {
-    
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] data = line.split(",");

@@ -7,6 +7,14 @@ import java.util.List;
 import java.util.Map;
 
 public class CourseManager {
+    /**
+     * Merge data into a new file
+     * 
+     * @param studentFilePath   search data from studentInfo,csv
+     * @param courseFilePath    search data from course.csv
+     * @param outputFilePath    merge data in student_course.csv
+     * @throws IOException
+     */
     public void mergeStudentCourseData(String studentFilePath, String courseFilePath, String outputFilePath) throws IOException {
         List<List<String>> courses = CSVReader.readData(courseFilePath);
         Map<String, List<String>> courseMap = new HashMap<>();
@@ -15,13 +23,12 @@ public class CourseManager {
             String courseKey = course.get(1) + "_" + course.get(2); 
             courseMap.put(courseKey, course);
         }
-
         List<List<String>> students = CSVReader.readData(studentFilePath);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFilePath, true))) {
             for (List<String> student : students) {
                 if (student.size() < 5) continue; 
-                String studentCourseKey = student.get(3) + "_" + student.get(2); 
+                String studentCourseKey = student.get(3) + "," + student.get(2); 
                 List<String> courseInfo = courseMap.get(studentCourseKey);
                 if (courseInfo != null) {
                     List<String> mergedInfo = new ArrayList<>(student);
@@ -39,14 +46,15 @@ public class CourseManager {
         CourseManager courseManager = new CourseManager();
         String studentFilePath = "studentInfo.csv";
         String courseFilePath = "course.csv";
-        String outputFilePath = "studentInfo_new.csv";
-
+        String outputFilePath = "studentInfo_course.csv";
+        //Update data, if existing data will be replaced
+        //write empty data first 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFilePath, false))) {
             writer.write("");
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        //save data
         try {
             courseManager.mergeStudentCourseData(studentFilePath, courseFilePath, outputFilePath);
         } catch (IOException e) {
