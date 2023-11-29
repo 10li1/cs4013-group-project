@@ -20,7 +20,7 @@ public class CourseManager {
         Map<String, List<String>> courseMap = new HashMap<>();
         for (List<String> course : courses) {
             if (course.size() < 5) continue; 
-            String courseKey = course.get(1) + "_" + course.get(2); 
+            String courseKey = course.get(1) + "," + course.get(2); 
             courseMap.put(courseKey, course);
         }
         List<List<String>> students = CSVReader.readData(studentFilePath);
