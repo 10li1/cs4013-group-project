@@ -5,76 +5,115 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Student {
-    private String studentId;
+    private String studentId;               
     private String studentName;
     private String studentType; 
     private int year; 
     private String course; 
-    private List<String> module; 
-    private List<Course> selectedCourses;
 
+    /**
+     * constructor with a specified data
+     * 
+     * @param studentId     student id
+     * @param studentName   student name
+     * @param year          year in
+     * @param course        student course
+     * @param studentType   type e.g Bachelor(undergraduate), Master(postgraduate)
+     */
     public Student(String studentId, String studentName, int year, String course, String studentType) {
         this.studentId = studentId;
         this.studentName = studentName;
         this.year = year;
         this.course = course;
         this.studentType = studentType;
-        this.module = new ArrayList<>();
-        this.selectedCourses = new ArrayList<>();
     }
 
+    /**
+     * get student name
+     * 
+     * @return student name
+     */
     public String getStudentName(){
         return studentName;
     }
 
+    /**
+     * set student name 
+     * 
+     * @param studentName student name
+     */
     public void setStudentName(String studentName){
         this.studentName = studentName;
     }
 
-    public void addSelectedCourse(Course course) {
-        selectedCourses.add(course);
-    }
-
-    public List<Course> getSelectedCourses() {
-        return selectedCourses;
-    }
-
-    public void addModule(String modules) {
-        module.add(modules);
-    }
-
-    public List<String> getModule() {
-        return module;
-    }
-
+    /**
+     * get student id
+     * 
+     * @return student id
+     */
     public String getStudentId(){
         return studentId;
     }
 
+    /**
+     * set student id
+     * 
+     * @param studentId student id
+     */
     public void setStudentId(String studentId){
         this.studentId = studentId;
     }
 
+    /**
+     * student year in
+     * 
+     * @return year
+     */
     public int getYear(){
         return year;
     }
 
+    /**
+     * set year
+     * 
+     * @param year year in
+     */
     public void setYear(int year){
         this.year = year;
     }
     
+    /**
+     * get course name
+     * 
+     * @return course name
+     */
     public String getCourse(){
         return course;
     }
 
+    /**
+     * set course name
+     * 
+     * @param course courst name
+     */
     public void setCourse(String course){
         this.course = course;
     }
 
+    /**
+     * get student type
+     * 
+     * @return type
+     */
     public String getStudentType(){
         return studentType;
     }
 
+    /**
+     * set student type
+     * 
+     * @param studentType type of student
+     */
     public void setStudentType(String studentType){
         this.studentType = studentType;
     }
@@ -88,6 +127,13 @@ public class Student {
             " student Type: " + studentType;
     }*/
 
+    /**
+     * student login operate
+     * 
+     * @param in input
+     * @param filePath search from csv
+     * @throws IOException error input
+     */
     public static void studentLogin(Scanner in, String filePath) throws IOException {
         boolean search = true;
         while (search) {
@@ -121,6 +167,7 @@ public class Student {
                     }
                 }
             }
+            //if not found this student
             if (!found) {
                 System.out.println("student ID " + studentId + " does not exist");
                 while (true) {
@@ -128,11 +175,11 @@ public class Student {
                     String chosen = in.next();
                     System.out.println();
                     if (chosen.equals("1")) {
-                        search = true; // 用户选择再次尝试
+                        search = true; 
                         break;
                     } 
                     if (chosen.equals("2")) {
-                        search = false; // 用户选择退出
+                        search = false; 
                         break;
                     }
                     System.out.println("Invalid input, please try again");
@@ -141,15 +188,23 @@ public class Student {
         }
     }
 
+    /**
+     * add new student and save in csv
+     * check is id in the csv first, if not can set up new student
+     * this method use for admin user
+     * 
+     * @param fileName save in studentinfo.csv
+     * @throws IOException error input
+     */
     public static void registerStudent(String fileName) throws IOException {
         Scanner scanner = new Scanner(System.in);
         boolean idExists = true;
         Student studentId = null;
-
         while (idExists) {
             System.out.print("student ID: ");
             String id = scanner.next();
             List<List<String>> existingData = CSVReader.readData(fileName);
+            //check id exist
             idExists = existingData.stream().anyMatch(data -> data.get(0).equals(id));
             if (idExists) {
                 System.out.println("Student ID already exists");
@@ -170,6 +225,14 @@ public class Student {
         CSVWriter.addData(fileName, studentData);
     }
 
+    /**
+     * set up student info
+     * use for registerStudent method
+     * 
+     * @param in input info
+     * @param studentId check id
+     * @return new student info
+     */
     public static Student createNewStudent(Scanner in, String studentId) {
         System.out.print("Name:");
         in.nextLine(); 
@@ -188,6 +251,15 @@ public class Student {
         return new Student(studentId, studentName, year, course, studentType);
     }
 
+    /**
+     * modify student info
+     * check id first
+     * 
+     * @param studentId check id
+     * @param in input
+     * @param fileName save in csv
+     * @throws IOException error input
+     */
     public static void modifyStudent(String studentId, Scanner in, String fileName) throws IOException {
         List<List<String>> studentsData = CSVReader.readData(fileName);
         boolean found = false;
@@ -219,7 +291,7 @@ public class Student {
                 break;
             }
         }
-
+        //if id exist, can modify
         if (found) {
             for (List<String> studentData : studentsData) {
                 if (studentData.get(0).equals(studentId)) {
@@ -229,46 +301,70 @@ public class Student {
                     break;
                 }
             }
-        } else {
+        } 
+        //if not found
+        else {
             System.out.println("Student ID does not exist");
         }
     }
 
+    /**
+     * look student info
+     * 
+     * @param studentId check id
+     * @param fileName find info in csv
+     * @throws IOException error input
+     */
     public static void viewStudent(String studentId, String fileName) throws IOException {
         List<List<String>> studentsData = CSVReader.readData(fileName);
-        //boolean found = false;
-
+        boolean found = false;
+        //if found, show up info
         for (List<String> studentData : studentsData) {
             if (studentData.get(0).equals(studentId)) {
-                // [id, name, year, course, studentType]
+                // format in csv [id, name, year, course, studentType]
                 System.out.println("Student ID: " + studentData.get(0));
                 System.out.println("Name: " + studentData.get(1));
                 System.out.println("Year: " + studentData.get(2));
                 System.out.println("Course: " + studentData.get(3));
                 System.out.println("Type: " + studentData.get(4));
                 System.out.println();
-                //found = true;
+                found = true;
                 break;
             }
         }
-
-        /*if (!found) {
+        //if not found this id
+        if (!found) {
             System.out.println("Unable to find information for student with ID: " + studentId);
-        }*/
+        }
     }
     
+    /**
+     * delete student from csv
+     * 
+     * @param studentId check id exist
+     * @param fileName delete student from studentinfo.csv
+     * @throws IOException error input
+     */
     public static void deleteStudent(String studentId, String fileName) throws IOException {
         List<List<String>> existingData = CSVReader.readData(fileName);
         boolean removed = existingData.removeIf(data -> data.get(0).equals(studentId));
-    
+        //only remove if id exist
         if (removed) {
             CSVWriter.deleteData(fileName, existingData);
             System.out.println("Student with ID " + studentId + " has been removed");
-        } else {
+        } 
+        else {
             System.out.println("Student ID does not exist.");
         }
     }
 
+    /**
+     * this method use for studnt view they own full info
+     * 
+     * @param studentId check login id
+     * @param mergedDataFilePath    read data from studentinfo_course.csv, merged studentinfo.csv and course.csv
+     * @throws IOException error input
+     */
     public static void viewStudentInfo(String studentId, String mergedDataFilePath) throws IOException {
         List<List<String>> mergedData = CSVReader.readData(mergedDataFilePath);
         boolean courseFound = false;
@@ -298,16 +394,24 @@ public class Student {
                     }
                 }
                 System.out.println();
-    
                 courseFound = true;
                 break;
             }
         }
+        //if can not find course info, just display person info
         if (!courseFound) {
             Student.viewStudent(studentId, "studentInfo.csv");
         }
     }
     
+    /**
+     * view student result method
+     * use for student look up they own result and qca
+     * 
+     * @param studentId check id
+     * @param transcriptFilePath find qca in studentqcs.csv
+     * @throws IOException error input
+     */
     public static void viewStudentGrades(String studentId, String transcriptFilePath) throws IOException {
         List<List<String>> transcriptData = CSVReader.readData(transcriptFilePath);
         boolean gradesFound = false;
@@ -318,7 +422,7 @@ public class Student {
                 System.out.println("--Student Transcript--");
                 System.out.println("ID: " + row.get(0));
                 System.out.println("Module Information");
-                // QCA is last element in csv file
+                // dispaly module info
                 for (int i = 1; i < row.size() - 1; i++) {
                     String[] moduleInfo = row.get(i).split(":");
                     if (moduleInfo.length == 2) {
@@ -331,14 +435,17 @@ public class Student {
                         }
                     }
                 }
-                // display QCA
+                // display QCA, QCA is last element in csv file
                 double qca = Double.parseDouble(row.get(row.size() - 1));
                 System.out.println("QCA: " + qca);
                 if (qca >= 2) {
                     System.out.println("Congratulations on completing the semester");
-                } else {
+                } 
+                //need to repeat,qca<2
+                else {
                     System.out.println("You do not meet the minimum grade standards for this semester.");
                 }
+                //list module need to repeat
                 if (!repeatModules.isEmpty()) {
                     System.out.println("You need to take a repeat exam for: " + String.join(", ", repeatModules));
                 }
@@ -347,7 +454,7 @@ public class Student {
                 break;
             }
         }
-    
+        //no result to display
         if (!gradesFound) {
             System.out.println("No results found for student ID " + studentId);
             System.out.println();

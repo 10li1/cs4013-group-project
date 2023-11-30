@@ -13,7 +13,7 @@ public class CourseManager {
      * @param studentFilePath   search data from studentInfo,csv
      * @param courseFilePath    search data from course.csv
      * @param outputFilePath    merge data in student_course.csv
-     * @throws IOException
+     * @throws IOException      error info
      */
     public void mergeStudentCourseData(String studentFilePath, String courseFilePath, String outputFilePath) throws IOException {
         List<List<String>> courses = CSVReader.readData(courseFilePath);

@@ -38,7 +38,7 @@ public class Course {
     /**
      * set course code
      * 
-     * @param courseCode
+     * @param courseCode course code
      */
     public void setCourseCode(String courseCode){
         this.courseCode = courseCode;
@@ -74,7 +74,7 @@ public class Course {
     /**
      * set course year
      * 
-     * @param courseYear
+     * @param courseYear year
      */
     public void setCourseYear(int courseYear){
         this.courseYear = courseYear;
@@ -83,7 +83,7 @@ public class Course {
     /**
      * return course semester
      * 
-     * @return 
+     * @return semester
      */
     public String getCourseSemester(){
         return courseSemester;
@@ -92,7 +92,7 @@ public class Course {
     /**
      * set course semester
      * 
-     * @param courseSemester
+     * @param courseSemester semester spring/autumn
      */
     public void setCourseSemester(String courseSemester){
         this.courseSemester = courseSemester;
@@ -101,7 +101,7 @@ public class Course {
     /**
      *return module list
      *  
-     * @return
+     * @return list of module s
      */
     public List<Module> getModules() {
         return this.modules;
@@ -121,7 +121,7 @@ public class Course {
      * 
      * @param in            input new course info
      * @param fileName      save course in course.csv
-     * @throws IOException
+     * @throws IOException  error input
      */
     public static void addNewCourse(Scanner in,String fileName) throws IOException {
         boolean codeExists = true;
@@ -168,7 +168,7 @@ public class Course {
      * view the course from course.csv
      * 
      * @param fileName  check data from course.csv 
-     * @throws IOException
+     * @throws IOException  error input
      */
     public static void viewCourse(String fileName) throws IOException {
         List<List<String>> coursesData = CSVReader.readData(fileName);
@@ -203,7 +203,7 @@ public class Course {
      * 
      * @param in        input course code 
      * @param fileName  and check is this code in course.csv
-     * @throws IOException
+     * @throws IOException error input
      */
     public static void modifyCourse(Scanner in,String fileName) throws IOException {
         List<List<String>> coursesData = CSVReader.readData(fileName);
@@ -244,7 +244,7 @@ public class Course {
      * 
      * @param in    put new module info
      * @param fileName  save in course.csv file
-     * @throws IOException
+     * @throws IOException error input
      */
     public static void modifyCourseModules(Scanner in, String fileName) throws IOException {
         List<List<String>> coursesData = CSVReader.readData(fileName);
@@ -334,7 +334,7 @@ public class Course {
      * 
      * @param in        input course code 
      * @param fileName  reader file
-     * @throws IOException
+     * @throws IOException error input
      */
     public static void deleteCourse(Scanner in, String fileName) throws IOException {
         List<List<String>> coursesData = CSVReader.readData(fileName);

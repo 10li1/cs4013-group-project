@@ -10,7 +10,7 @@ public class Admin {
     /**
      * constructor with a specified admin id
      * 
-     * @param adminId
+     * @param adminId admin id
      */
     public Admin(String adminId) {
         this.adminId = adminId;
@@ -20,7 +20,7 @@ public class Admin {
      * Display the operations that the administrator can perform when choosing to log in as an admin
      * 
      * @param in chose operate
-     * @throws IOException
+     * @throws IOException error input
      */
     public static void adminLogin(Scanner in) throws IOException {
         boolean continues = true;
@@ -247,7 +247,7 @@ public class Admin {
      * @param in            input student id
      * @param studentCourseFilePath     search student info from student_course.csv
      * @param resultFilePath            put result in result.csv
-     * @throws IOException
+     * @throws IOException      error input
      */
     public static void inputGrades(String studentId, Scanner in, String studentCourseFilePath, String resultFilePath) throws IOException {
         List<List<String>> studentsData = CSVReader.readData(studentCourseFilePath);
@@ -266,11 +266,20 @@ public class Admin {
             System.out.println();
         }
     }
-    //
+    /**
+     * set id
+     * 
+     * @param adminId admin id
+     */
     public void setAdminId(String adminId) {
         this.adminId = adminId;
     }
 
+    /**
+     * get id
+     * 
+     * @return id
+     */
     public String getAdminId() {
         return adminId;
     }

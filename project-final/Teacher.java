@@ -10,6 +10,15 @@ public class Teacher {
     private String title;
     private String department;
 
+    /**
+     * constructor with a specified data
+     * 
+     * @param teacherId teacher id
+     * @param teacherName teacher name
+     * @param module    module teach
+     * @param title     title e.g dr
+     * @param department    deparment e.g csis
+     */
     public Teacher(String teacherId, String teacherName, String module, String title, String department) {
         this.teacherId = teacherId;
         this.teacherName = teacherName;
@@ -18,48 +27,98 @@ public class Teacher {
         this.department = department;
     }
 
+    /**
+     * set teacher id
+     * 
+     * @param teacherId teacher id
+     */
     public void setTeacherId(String teacherId) {
         this.teacherId = teacherId;
     }
 
+    /**
+     * get teacher id
+     * @return teacher id
+     */
     public String getTeacherId() {
         return teacherId;
     }
 
+    /**
+     * set teacher name
+     * 
+     * @param teacherName teacher name 
+     */
     public void setTeacherName(String teacherName) {
         this.teacherName = teacherName;
     }
 
+    /**
+     * get teacher name
+     * 
+     * @return teacher name
+     */
     public String getTeacherName() {
         return teacherName;
     }
     
+    /**
+     * set teaching module 
+     * 
+     * @param module module name
+     */
     public void setModule(String module) {
         this.module = module;
     }
 
+    /**
+     * get module
+     * 
+     * @return module name
+     */
     public String getModule() {
         return module;
     }
 
+    /**
+     * set teacher title
+     * 
+     * @param title title
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     * get teacher title
+     * 
+     * @return title
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * set department
+     * 
+     * @param department department
+     */
     public void setDepartment(String department) {
         this.department = department;
     }
 
+    /**
+     * get department
+     * 
+     * @return department
+     */
     public String getDepartment() {
         return department;
     }
 
     @Override
     public String toString() {
+        //display teacher info
         return "Staff Id: " + teacherId + '\n' +
             " Staff Name: " + teacherName + '\n' +
             " Teach Module: " + module + '\n' +
@@ -67,6 +126,14 @@ public class Teacher {
             " Department: " + department;
     }
 
+    /**
+     * teacher login 
+     * use for run
+     * 
+     * @param in  input
+     * @param filePath check teacherinfo.csv
+     * @throws IOException error input
+     */
     public static void teacherLogin(Scanner in, String filePath) throws IOException {
         boolean search = true;
         while (search) {
@@ -112,11 +179,16 @@ public class Teacher {
         }
     }
 
+    /**
+     * add new teacher
+     * 
+     * @param fileName save in teacher csv
+     * @throws IOException error input
+     */
     public static void registerTeacher(String fileName) throws IOException {
         Scanner scanner = new Scanner(System.in);
         boolean idExists = true;
         Teacher teacherId = null;
-
         while (idExists) {
             System.out.print("Staff ID: ");
             String id = scanner.next();
@@ -127,7 +199,8 @@ public class Teacher {
             if (idExists) {
                 System.out.println("Staff ID " + id + " already exists");
                 System.out.println();
-            } else {
+            } 
+            else {
                 teacherId = Teacher.createNewTeacher(scanner, id);
             }
         }
@@ -144,6 +217,13 @@ public class Teacher {
         CSVWriter.addData("teacherInfo.csv", teacherData);
     }
 
+    /**
+     * set up teacher info
+     * 
+     * @param in input
+     * @param teacherId save in this id
+     * @return new teacher
+     */
     public static Teacher createNewTeacher(Scanner in, String teacherId) {
         System.out.print("Name: ");
         String teacherName = in.next();
@@ -157,6 +237,14 @@ public class Teacher {
         return new Teacher(teacherId, teacherName, module, title, department);
     }
 
+    /**
+     * modify teacher info
+     * 
+     * @param teacherId check id
+     * @param in input
+     * @param fileName in teacherinfo.csv
+     * @throws IOException error input
+     */
     public static void modifyTeacher(String teacherId, Scanner in, String fileName) throws IOException {
         List<List<String>> teachersData = CSVReader.readData(fileName);
         boolean found = false;
@@ -198,6 +286,13 @@ public class Teacher {
         }
     }
 
+    /**
+     * view teacher info
+     * 
+     * @param teacherId check id
+     * @param fileName check from csv
+     * @throws IOException error input
+     */
     public static void viewTeacher(String teacherId, String fileName) throws IOException {
         List<List<String>> teachersData = CSVReader.readData(fileName);
         boolean found = false;
@@ -221,15 +316,23 @@ public class Teacher {
         }
     }
     
+    /**
+     * delete teacher from csv
+     * 
+     * @param teacherId check id
+     * @param fileName delete from csv
+     * @throws IOException error input
+     */
     public static void deleteTeacher(String teacherId, String fileName) throws IOException {
         List<List<String>> existingData = CSVReader.readData(fileName);
         boolean removed = existingData.removeIf(data -> data.get(0).equals(teacherId));
-    
+        //only remove exist id
         if (removed) {
             CSVWriter.deleteData(fileName, existingData);
             System.out.println("Staff with ID " + teacherId + " has been removed");
             System.out.println();
-        } else {
+        } 
+        else {
             System.out.println("Staff ID does not exist");
             System.out.println();
         }

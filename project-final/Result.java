@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Result {
+    //result list
     private static final String[] GRADES = {"NG", "F", "D2", "D1", "C3", "C2", "C1", "B3", "B2", "B1", "A2", "A1"};
     private static final int[] SCORE_THRESHOLDS = {0, 1, 30, 35, 40, 48, 52, 56, 60, 64, 72, 80};
     private static final double[] QPV_POINTS = {0.00, 0.00, 1.20, 1.60, 2.00, 2.40, 2.60, 2.80, 3.00, 3.20, 3.60, 4.00};
@@ -17,7 +18,7 @@ public class Result {
     /**
      * Convert scores to grades
      *  
-     * @param score 
+     * @param score score to grade
      * @return  if no score return ng
      */
     public static String scoreToGrade(double score) {
@@ -48,7 +49,7 @@ public class Result {
     /**
      * calculate qca by grade
      *  
-     * @param grades   
+     * @param grades  grade to qpv and calcu qca
      * @return  qca
      */
     public static double calculateQCA(List<String> grades) {
@@ -63,9 +64,9 @@ public class Result {
     /**
      * set student result 
      * 
-     * @param studentCourse
-     * @param scanner
-     * @param resultFilePath
+     * @param studentCourse coursr name
+     * @param scanner       input
+     * @param resultFilePath save in result.csv
      * @throws IOException
      */
     public void inputGradesAndSave(List<String> studentCourse, Scanner scanner, String resultFilePath) throws IOException {
@@ -117,7 +118,13 @@ public class Result {
     Files.write(Paths.get(resultFilePath), updatedLines);
     }
 
-    public void calculateAndSaveStudentGPA(String resultFilePath, String qcaFilePath) {
+    /**
+     * calcu qca
+     * 
+     * @param resultFilePath get score from result.csv
+     * @param qcaFilePath save in qca csv file
+     */
+    public void calculateAndSaveStudentQCA(String resultFilePath, String qcaFilePath) {
         try (BufferedReader reader = new BufferedReader(new FileReader(resultFilePath));
         BufferedWriter writer = new BufferedWriter(new FileWriter(qcaFilePath))) {
             String line;
@@ -159,8 +166,13 @@ public class Result {
         }
     }
 
+    /**
+     * generate student transcript
+     * 
+     * @param studentId check id exist
+     */
     public static void generateStudentTranscript(String studentId) {
         Result calculator = new Result();
-        calculator.calculateAndSaveStudentGPA("result.csv", "studentQCA.csv");
+        calculator.calculateAndSaveStudentQCA("result.csv", "studentQCA.csv");
     }
 }
