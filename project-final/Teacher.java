@@ -70,7 +70,8 @@ public class Teacher {
     public static void teacherLogin(Scanner in, String filePath) throws IOException {
         boolean search = true;
         while (search) {
-            System.out.print("Please enter staff ID: ");
+            System.out.println("--Teacher login-- ");
+            System.out.print("teacher ID: ");
             String teacherId = in.next();
             System.out.println();
             List<List<String>> teachersData = CSVReader.readData("teacherInfo.csv");

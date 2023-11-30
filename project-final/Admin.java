@@ -74,7 +74,7 @@ public class Admin {
                         }
                         //to set student score for each module if have in studentInfo_course.csv and save in result.csv
                         else if(choice1.equals("4")){
-                            System.out.println("input student number ");                           
+                            System.out.println("input student ID");                           
                             String studentId = in.next();
                             System.out.println();
                             try {

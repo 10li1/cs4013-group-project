@@ -180,13 +180,14 @@ public class Course {
                 //if module list not empty display
                 if (!courseData.get(4).isEmpty()) {
                     String[] modules = courseData.get(4).split(";");
-                    System.out.println("Module Code: , Module Name: ");
+                    System.out.println("-Module Info-");
                     for (String module : modules) {
                         String[] moduleDetails = module.split(":");
                         if (moduleDetails.length >= 1) {
-                            System.out.println(moduleDetails[0].trim() + ", " + moduleDetails[1].trim());
+                            System.out.println("Module:" + moduleDetails[0].trim() + "-" + moduleDetails[1].trim());
                         }
                     }
+                    System.out.println();
                 }
                 else{
                     System.out.println("No module found");
