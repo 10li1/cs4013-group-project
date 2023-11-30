@@ -1,5 +1,5 @@
 # cs4013-group-project
-cs4013 group project for student result 
+cs4013 group project for student records system. 
 
 ### group members:
 1. Peile Li      22305319
